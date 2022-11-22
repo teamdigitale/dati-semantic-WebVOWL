@@ -1,0 +1,76 @@
+plugins {
+    id 'org.springframework.boot' version '2.7.5'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id 'java'
+    id "org.owasp.dependencycheck" version "7.3.0"
+}
+
+group = 'it.gov.innovazione.owl2vowl'
+version = '0.0.1-SNAPSHOT'
+
+def generatedVersionDir = "$projectDir/src/main/resources"
+
+sourceCompatibility = '11'
+
+apply plugin: 'war'
+
+repositories {
+	mavenCentral()
+}
+
+configurations {
+    all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+}
+
+dependencies {
+	implementation('org.springframework.boot:spring-boot-starter-web') {
+        exclude group: 'org.yaml'
+    }
+	implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
+	implementation group: 'net.sourceforge.owlapi', name: 'owlapi-distribution', version: '5.1.20'
+	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: '2.7.4'
+	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.14.0-rc2'
+	implementation group: 'com.google.guava', name: 'guava', version: '31.1-jre'
+	providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+import org.apache.tools.ant.taskdefs.condition.Os
+
+war {
+    enabled = false
+}
+
+bootWar {
+    enabled = true
+    from('../webVowl/deploy') {
+        into('WEB-INF/classes/static')
+    }
+}
+
+dependencyCheck {
+//set up a quality gate for vulnerabilities with high severity level:
+//let's consider that a vulnerability has a high severity level if its CVSS score is higher than 7
+//the build is going to fail if vulnerabilities with high severity level found
+    failBuildOnCVSS = 7
+
+//specify a list of known issues which contain:
+//false-positives
+//confirmed vulnerabilities which are not fixed yet, but we have a ticket for that
+    suppressionFile = 'config/dependency-check/dependency-check-known-issues.xml'
+}
+
+tasks.register("generateVersionProperties") {
+  doLast {
+    def propertiesFile = file("$generatedVersionDir/version.properties")
+    def properties = new Properties()
+    properties.setProperty("version", rootProject.version.toString())
+    propertiesFile.withWriter { properties.store(it, null) }
+  }
+}
+
+tasks.named("processResources") {
+  dependsOn("generateVersionProperties")
+}
