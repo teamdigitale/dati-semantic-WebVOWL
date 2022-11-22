@@ -39,7 +39,7 @@ jobs:
       - name: Create FE Build Artifact
         run:  npm install --prefix ./webVowl && npm run build --prefix ./webVowl
       - name: copy FE static content
-        run: cp -R webVowl/deploy owl2vowl/webVowl/deploy
+        run: mkdir -p owl2vowl/webVowl && cp -R webVowl/deploy owl2vowl/webVowl/deploy
       - name: Create BE Build Artifact
         run: ./owl2vowl/gradlew -b owl2vowl/build.gradle clean build
       - name: SpotBugs Check
