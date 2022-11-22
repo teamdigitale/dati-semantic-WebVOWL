@@ -39,10 +39,7 @@ jobs:
       - name: Create FE Build Artifact
         run:  npm install --prefix ./webVowl && npm run build --prefix ./webVowl
       - name: copy FE static content
-        uses: canastro/copy-file-action@master
-        with:
-            source: "webVowl/deploy"
-            target: "owl2vowl/webVowl/deploy"
+        run: cp -R webVowl/deploy owl2vowl/webVowl/deploy
       - name: Create BE Build Artifact
         run: ./owl2vowl/gradlew -b owl2vowl/build.gradle clean build
       - name: SpotBugs Check
