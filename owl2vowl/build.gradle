@@ -3,6 +3,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.0'
     id 'java'
     id "org.owasp.dependencycheck" version "7.3.0"
+    id 'com.github.spotbugs' version '5.0.13'
 }
 
 group = 'it.gov.innovazione.owl2vowl'
@@ -37,6 +38,28 @@ dependencies {
 	providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
+
+spotbugsMain {
+    excludeFilter = file("${rootProject.projectDir}/config/spotbugs/exclude-filter.xml")
+
+    reports {
+        html {
+            enabled = true
+            destination = file("$buildDir/reports/spotbugs/main/spotbugs.html")
+        }
+    }
+}
+
+spotbugsTest {
+    excludeFilter = file("${rootProject.projectDir}/config/spotbugs/exclude-filter.xml")
+    reports {
+        html {
+            enabled = true
+            destination = file("$buildDir/reports/spotbugs/test/spotbugs.html")
+        }
+    }
+}
+
 import org.apache.tools.ant.taskdefs.condition.Os
 
 war {
