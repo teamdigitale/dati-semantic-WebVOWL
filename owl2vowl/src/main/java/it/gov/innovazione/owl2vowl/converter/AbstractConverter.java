@@ -80,11 +80,7 @@ public abstract class AbstractConverter implements Converter {
 	public void releaseMemory() {
 		manager.removeMissingImportListener(missingListener);
 		manager.removeOntology(ontology);
-<<<<<<< HEAD
-		vowlData.Destructore();
-=======
 		vowlData.destructore();
->>>>>>> master
 		vowlData = null;
 		missingListener = null;
 		manager = null;
@@ -208,18 +204,11 @@ public abstract class AbstractConverter implements Converter {
 
 				}
 				vowlData.addBaseConstructorAnnotation(subject, property, value);
-<<<<<<< HEAD
-			} catch (Exception e) {
-				// we dont care
-				// this is a declaration axiom and not an assertion axiom , we are interessted
-				// in assertion to baseConstructors
-=======
 			} catch (RuntimeException e) {
 				// we dont care
 				// this is a declaration axiom and not an assertion axiom , we are interessted
 				// in assertion to baseConstructors
 				logger.warn(e);
->>>>>>> master
 			}
 		}
 
@@ -309,11 +298,7 @@ public abstract class AbstractConverter implements Converter {
 				OwlClassAxiomVisitor temp = new OwlClassAxiomVisitor(vowlData, owlClass);
 				try {
 					owlClassAxiom.accept(temp);
-<<<<<<< HEAD
-					temp.Destrucotre();
-=======
 					temp.destrucotre();
->>>>>>> master
 					temp = null;
 				} catch (Exception e) {
 					logger.info("ProcessClasses : Failed to accept owlClassAxiom -> Skipping");
@@ -337,10 +322,7 @@ public abstract class AbstractConverter implements Converter {
 					vowlData.addBaseConstructorAnnotation(subject, property, value);
 				} catch (Exception e) {
 					// not interesting
-<<<<<<< HEAD
-=======
 					logger.warn(e);
->>>>>>> master
 				}
 			}
 		}
