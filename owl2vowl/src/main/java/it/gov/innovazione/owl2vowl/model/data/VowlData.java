@@ -57,7 +57,7 @@ public class VowlData {
 		addDatatype(genericLiteral);
 	}
 
-	public void Destructore() {
+	public void destructore() {
 		for (Entry<AbstractEntity, String> entry : entityToId.entrySet()) {
 			entry.getKey().releaseMemory();
 			
@@ -356,7 +356,7 @@ public class VowlData {
 		this.metrics = metrics;
 	}
 
-	private class VowlIriGenerator {
+	private static class VowlIriGenerator {
 		public static final String iriPrefix = "http://owl2vowl.de#";
 		public static final String baseIri = "http://owl2vowl.de";
 		private int generations = 0;
@@ -371,7 +371,7 @@ class AllEntityMap<K, V extends AbstractEntity> extends HashMap<K, V> {
 	private HashMap<K, V> mergeMap;
 
 	public <Val extends AbstractEntity> AllEntityMap(Map<K, Val> mergeMap) {
-		this.mergeMap = (HashMap<K, V>) mergeMap;
+		this.mergeMap = new HashMap(mergeMap);
 	}
 
 	@Override

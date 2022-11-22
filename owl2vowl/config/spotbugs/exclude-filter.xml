@@ -11,4 +11,7 @@
     <Match>
         <Bug pattern="EI_EXPOSE_REP2"/><!-- False positive when using lombok -->
     </Match>
+    <Match>
+        <Bug pattern="DM_GC"/><!-- False positive when using lombok -->
+    </Match>
 </FindBugsFilter>

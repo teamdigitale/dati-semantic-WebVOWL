@@ -2,6 +2,7 @@ package it.gov.innovazione.owl2vowl;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.Collection;
 
 import org.semanticweb.owlapi.model.IRI;
@@ -42,7 +43,7 @@ public class Owl2Vowl {
 		converter.clearLoadingMsg();
 	}
 	public Owl2Vowl(String ontologyAsString) {
-		InputStream ontologyStream = new ByteArrayInputStream(ontologyAsString.getBytes());
+		InputStream ontologyStream = new ByteArrayInputStream(ontologyAsString.getBytes(Charset.defaultCharset()));
 		converter = new InputStreamConverter(ontologyStream);
 		converter.clearLoadingMsg();
 	}

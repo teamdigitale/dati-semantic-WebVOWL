@@ -43,8 +43,8 @@ public class Owl2VowlController {
 	private static final String DIRECT_INPUT = "/directInput";
 	private static final String GIZMO_INPUT = "/gizMOInput";
 	
-	public  static       String loadingStatusMsg="";
-	private static Boolean needConversionID=true;
+	public  		     String loadingStatusMsg="";
+	private 			 Boolean needConversionID=true;
 	
 	Map<String, Owl2Vowl> conversionSessionMap=new HashMap<String, Owl2Vowl>();
 	
