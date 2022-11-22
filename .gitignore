@@ -1,3 +1,44 @@
+HELP.md
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### STS ###
+.owl2vowl/apt_generated
+.owl2vowl/classpath
+.owl2vowl/factorypath
+.owl2vowl/project
+.owl2vowl/settings
+.owl2vowl/springBeans
+.owl2vowl/sts4-cache
+.owl2vowl/bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+
+logs/
+
 # Node.js dependencies
 node_modules
 
@@ -10,8 +51,8 @@ node_modules
 .classpath
 
 # Build files
-deploy/**
-!deploy/.htaccess
+webVowl/deploy/**
+webVowl/!deploy/.htaccess
 webvowl*.zip
 
 # NetBeans files

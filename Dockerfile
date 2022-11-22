@@ -1,16 +1,17 @@
-###########
-# WebVOWL #
-###########
+FROM node:fermium-alpine3.16 as builde_fe
+WORKDIR /
+COPY webVowl ./
+RUN npm install
+RUN npm run build
 
-# Use tomcat java 8 alpine as base image
-FROM tomcat:9-jre8-alpine
 
-# Build time arguments (WebVOWL version)
-ARG version=1.1.7
+FROM openjdk:11-jdk-slim as builder_be
+WORKDIR /app
+COPY ./owl2vowl /app
+COPY --from=builde_fe ./deploy ../webVowl/deploy
+RUN ./gradlew clean build 
 
-# Download WebVOWL to tomcat webapps directory as root app
-RUN rm -rf /usr/local/tomcat/webapps/* && \
-    wget -O /usr/local/tomcat/webapps/ROOT.war http://vowl.visualdataweb.org/downloads/webvowl_1.1.7.war
-
-# Run default server
+FROM tomcat:9.0.48-jdk11-openjdk-slim
+RUN rm -rf /usr/local/tomcat/webapps/*
+COPY --from=builder_be /app/build/libs/owl2vowl*.war /usr/local/tomcat/webapps/ROOT.war
 CMD ["catalina.sh", "run"]
