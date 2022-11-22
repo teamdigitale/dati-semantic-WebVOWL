@@ -80,7 +80,11 @@ public abstract class AbstractConverter implements Converter {
 	public void releaseMemory() {
 		manager.removeMissingImportListener(missingListener);
 		manager.removeOntology(ontology);
+<<<<<<< HEAD
 		vowlData.Destructore();
+=======
+		vowlData.destructore();
+>>>>>>> master
 		vowlData = null;
 		missingListener = null;
 		manager = null;
@@ -204,10 +208,18 @@ public abstract class AbstractConverter implements Converter {
 
 				}
 				vowlData.addBaseConstructorAnnotation(subject, property, value);
+<<<<<<< HEAD
 			} catch (Exception e) {
 				// we dont care
 				// this is a declaration axiom and not an assertion axiom , we are interessted
 				// in assertion to baseConstructors
+=======
+			} catch (RuntimeException e) {
+				// we dont care
+				// this is a declaration axiom and not an assertion axiom , we are interessted
+				// in assertion to baseConstructors
+				logger.warn(e);
+>>>>>>> master
 			}
 		}
 
@@ -297,7 +309,11 @@ public abstract class AbstractConverter implements Converter {
 				OwlClassAxiomVisitor temp = new OwlClassAxiomVisitor(vowlData, owlClass);
 				try {
 					owlClassAxiom.accept(temp);
+<<<<<<< HEAD
 					temp.Destrucotre();
+=======
+					temp.destrucotre();
+>>>>>>> master
 					temp = null;
 				} catch (Exception e) {
 					logger.info("ProcessClasses : Failed to accept owlClassAxiom -> Skipping");
@@ -321,6 +337,10 @@ public abstract class AbstractConverter implements Converter {
 					vowlData.addBaseConstructorAnnotation(subject, property, value);
 				} catch (Exception e) {
 					// not interesting
+<<<<<<< HEAD
+=======
+					logger.warn(e);
+>>>>>>> master
 				}
 			}
 		}
@@ -386,10 +406,11 @@ public abstract class AbstractConverter implements Converter {
 	 */
 	public void convert() {
 		// adding some debug hints for identifying crashes in the public version
-		
+
 		System.out.println("Converting Ontology:");
 		if (!initialized) {
-			System.out.println("  -> preLoadOntontology()"+new java.text.SimpleDateFormat("HH:mm:ss").format(java.util.Calendar.getInstance().getTime()));
+			System.out.println("  -> preLoadOntontology()"
+					+ new java.text.SimpleDateFormat("HH:mm:ss").format(java.util.Calendar.getInstance().getTime()));
 			preLoadOntology();
 		}
 		vowlData = new VowlData();
@@ -401,17 +422,21 @@ public abstract class AbstractConverter implements Converter {
 		this.addLoadingInfo("* Generating ontology graph ");
 		this.setCurrentlyLoadingFlag("* Generating ontology graph ", true);
 		try {
-			System.out.println("  -> preParsing() "+new java.text.SimpleDateFormat("HH:mm:ss").format(java.util.Calendar.getInstance().getTime()));
+			System.out.println("  -> preParsing() "
+					+ new java.text.SimpleDateFormat("HH:mm:ss").format(java.util.Calendar.getInstance().getTime()));
 			preParsing(ontology, vowlData, manager);
 
-			System.out.println("  -> parsing()"+new java.text.SimpleDateFormat("HH:mm:ss").format(java.util.Calendar.getInstance().getTime()));
+			System.out.println("  -> parsing()"
+					+ new java.text.SimpleDateFormat("HH:mm:ss").format(java.util.Calendar.getInstance().getTime()));
 			parsing(ontology, vowlData, manager);
 
-			System.out.println("  -> postParsing() "+new java.text.SimpleDateFormat("HH:mm:ss").format(java.util.Calendar.getInstance().getTime()));
+			System.out.println("  -> postParsing() "
+					+ new java.text.SimpleDateFormat("HH:mm:ss").format(java.util.Calendar.getInstance().getTime()));
 			postParsing(ontology, vowlData, manager);
 
 			this.addLoadingInfoToParentLine("... done");
-			System.out.println("--- Finished --- "+new java.text.SimpleDateFormat("HH:mm:ss").format(java.util.Calendar.getInstance().getTime()));
+			System.out.println("--- Finished --- "
+					+ new java.text.SimpleDateFormat("HH:mm:ss").format(java.util.Calendar.getInstance().getTime()));
 
 			this.setCurrentlyLoadingFlag(false);
 		} catch (Exception e) {
@@ -432,10 +457,8 @@ public abstract class AbstractConverter implements Converter {
 	/**
 	 * Exports the generated data according to the implemented {@link Exporter}.
 	 *
-	 * @param exporter
-	 *            The exporter.
-	 * @throws Exception
-	 *             Any exception during json generation.
+	 * @param exporter The exporter.
+	 * @throws Exception Any exception during json generation.
 	 */
 	public void export(Exporter exporter) throws Exception {
 		if (vowlData == null) {

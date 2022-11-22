@@ -186,12 +186,11 @@ protected void processGizmoAnnotations(VowlData vowlData) {
 	 * @param jsonObj Object to be invoked.
 	 */
 	private void invoke(Map<?, Object> jsonObj) {
-		Iterator<?> it = jsonObj.keySet().iterator();
-
+		Iterator<?> it = jsonObj.entrySet().iterator();
+		
 		while (it.hasNext()) {
-			Object key = it.next();
 
-			Object o = jsonObj.get(key);
+			Object o = ((Map.Entry<?, Object>) it.next()).getValue();
 
 			if (o instanceof Map) {
 				Map<?, Object> casted = (Map<?, Object>) o;

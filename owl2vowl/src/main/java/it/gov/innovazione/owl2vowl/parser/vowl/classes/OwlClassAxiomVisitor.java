@@ -28,7 +28,7 @@ public class OwlClassAxiomVisitor implements OWLObjectVisitor {
 
 	
 	
-	public void Destrucotre() {
+	public void destrucotre() {
 		this.vowlData = null;
 		this.owlClass = null;
 		

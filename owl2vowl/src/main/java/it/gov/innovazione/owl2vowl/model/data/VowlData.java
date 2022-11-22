@@ -29,7 +29,7 @@ public class VowlData {
 	// Not sure if context information should be stored here
 	protected OWLOntologyManager owlManager;
 	private Map<AbstractEntity, String> entityToId = new HashMap<>();
-	private Map<IRI, AbstractEntity> entityMap = new HashMap<>();
+	private HashMap<IRI, AbstractEntity> entityMap = new HashMap<>();
 	private Map<IRI, AbstractClass> classMap = new AllEntityMap<>(entityMap);
 	private Map<IRI, AbstractDatatype> datatypeMap = new AllEntityMap<>(entityMap);
 	private Map<IRI, VowlObjectProperty> objectPropertyMap = new AllEntityMap<>(entityMap);
@@ -57,7 +57,7 @@ public class VowlData {
 		addDatatype(genericLiteral);
 	}
 
-	public void Destructore() {
+	public void destructore() {
 		for (Entry<AbstractEntity, String> entry : entityToId.entrySet()) {
 			entry.getKey().releaseMemory();
 			
@@ -356,7 +356,7 @@ public class VowlData {
 		this.metrics = metrics;
 	}
 
-	private class VowlIriGenerator {
+	private static class VowlIriGenerator {
 		public static final String iriPrefix = "http://owl2vowl.de#";
 		public static final String baseIri = "http://owl2vowl.de";
 		private int generations = 0;
@@ -370,7 +370,7 @@ public class VowlData {
 class AllEntityMap<K, V extends AbstractEntity> extends HashMap<K, V> {
 	private HashMap<K, V> mergeMap;
 
-	public <Val extends AbstractEntity> AllEntityMap(Map<K, Val> mergeMap) {
+	public <Val extends AbstractEntity> AllEntityMap(HashMap<K, Val> mergeMap) {
 		this.mergeMap = (HashMap<K, V>) mergeMap;
 	}
 
