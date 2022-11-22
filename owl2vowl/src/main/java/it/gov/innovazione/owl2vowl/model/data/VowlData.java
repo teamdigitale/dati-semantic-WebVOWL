@@ -29,7 +29,7 @@ public class VowlData {
 	// Not sure if context information should be stored here
 	protected OWLOntologyManager owlManager;
 	private Map<AbstractEntity, String> entityToId = new HashMap<>();
-	private Map<IRI, AbstractEntity> entityMap = new HashMap<>();
+	private HashMap<IRI, AbstractEntity> entityMap = new HashMap<>();
 	private Map<IRI, AbstractClass> classMap = new AllEntityMap<>(entityMap);
 	private Map<IRI, AbstractDatatype> datatypeMap = new AllEntityMap<>(entityMap);
 	private Map<IRI, VowlObjectProperty> objectPropertyMap = new AllEntityMap<>(entityMap);
@@ -370,8 +370,8 @@ public class VowlData {
 class AllEntityMap<K, V extends AbstractEntity> extends HashMap<K, V> {
 	private HashMap<K, V> mergeMap;
 
-	public <Val extends AbstractEntity> AllEntityMap(Map<K, Val> mergeMap) {
-		this.mergeMap = new HashMap(mergeMap);
+	public <Val extends AbstractEntity> AllEntityMap(HashMap<K, Val> mergeMap) {
+		this.mergeMap = (HashMap<K, V>) mergeMap;
 	}
 
 	@Override
