@@ -54,7 +54,7 @@ jobs:
       - name: Dependency Check BE
         run: ./owl2vowl/gradlew -b owl2vowl/build.gradle dependencyCheckAnalyze
       - name: Dependency Check FE
-        run:  npm run owasp --prefix ./webVowl
+        run:  npm install --prefix ./webVowl && npm run owasp --prefix ./webVowl
   security:
     runs-on: ubuntu-latest
     steps:
