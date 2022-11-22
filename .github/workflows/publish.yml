@@ -51,8 +51,10 @@ jobs:
     steps:
       - name: checkout code
         uses: actions/checkout@v2
-      - name: Dependency Check
-        run: ./gradlew dependencyCheckAnalyze
+      - name: Dependency Check BE
+        run: ./owl2vowl/gradlew -b owl2vowl/build.gradle dependencyCheckAnalyze
+      - name: Dependency Check FE
+        run:  npm run owasp --prefix ./webVowl
   security:
     runs-on: ubuntu-latest
     steps:
