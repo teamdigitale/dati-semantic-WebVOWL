@@ -1,4 +1,9 @@
-WebVOWL [![Build Status](https://travis-ci.org/VisualDataWeb/WebVOWL.svg?branch=master)](https://travis-ci.org/VisualDataWeb/WebVOWL)
+# WebOWL + OWL2VOWL distribution for schema.gov.it
+
+This is a release of WebOWL + OWL2VOWL for https://schema.gov.it
+where dependencies are updated and the CI includes further checks.
+
+WebVOWL
 =======
 
 This repository was ported from an internal SVN repository to Github after the release of WebVOWL 0.4.0. Due to cleanups with `git filter-branch`, the commit history might show some strange effects.
