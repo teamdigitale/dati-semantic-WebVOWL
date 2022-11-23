@@ -27,7 +27,6 @@ public class OwlClassAxiomVisitor implements OWLObjectVisitor {
 	private Logger logger = LogManager.getLogger(OwlClassAxiomVisitor.class);
 
 	
-	
 	public void destrucotre() {
 		this.vowlData = null;
 		this.owlClass = null;
