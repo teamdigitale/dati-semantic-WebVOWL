@@ -30,7 +30,29 @@ dependencies {
         exclude group: 'org.yaml'
     }
 	implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
-	implementation group: 'net.sourceforge.owlapi', name: 'owlapi-distribution', version: '5.1.20'
+	implementation('net.sourceforge.owlapi:owlapi-distribution:5.1.1') {
+        exclude group: 'org.eclipse.rdf4j'
+    }
+	implementation group: 'org.eclipse.rdf4j', name: 'rdf4j-model', version: '3.7.7'
+	implementation group: 'org.eclipse.rdf4j', name: 'rdf4j-model-api', version: '3.7.7'
+	implementation group: 'org.eclipse.rdf4j', name: 'rdf4j-model-vocabulary', version: '3.7.7'
+	implementation group: 'org.eclipse.rdf4j', name: 'rdf4j-rio-languages', version: '3.7.7'
+	implementation group: 'org.eclipse.rdf4j', name: 'rdf4j-rio-datatypes', version: '3.7.7'
+	implementation group: 'org.eclipse.rdf4j', name: 'rdf4j-rio-binary', version: '3.7.7'
+	implementation group: 'org.eclipse.rdf4j', name: 'rdf4j-rio-n3', version: '3.7.7'
+	implementation group: 'org.eclipse.rdf4j', name: 'rdf4j-rio-nquads', version: '3.7.7'
+	implementation group: 'org.eclipse.rdf4j', name: 'rdf4j-rio-ntriples', version: '3.7.7'
+	implementation group: 'org.eclipse.rdf4j', name: 'rdf4j-rio-rdfjson', version: '3.7.7'
+	implementation group: 'org.eclipse.rdf4j', name: 'rdf4j-rio-jsonld', version: '3.7.7'
+	implementation group: 'org.eclipse.rdf4j', name: 'rdf4j-rio-rdfxml', version: '3.7.7'
+	implementation group: 'org.eclipse.rdf4j', name: 'rdf4j-rio-trix', version: '3.7.7'
+	implementation group: 'org.eclipse.rdf4j', name: 'rdf4j-rio-turtle', version: '3.7.7'
+	implementation group: 'org.eclipse.rdf4j', name: 'rdf4j-rio-trig', version: '3.7.7'
+	implementation group: 'org.eclipse.rdf4j', name: 'rdf4j-rio-hdt', version: '3.7.7'
+	implementation('org.eclipse.rdf4j:rdf4j-rio-api:3.7.7') {
+        exclude(group: "javax.xml.bind", module: "jaxb-api")
+        exclude(group: "jakarta.xml.bind", module: "jakarta.xml.bind-api")
+    }	
 	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: '2.7.4'
 	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.14.0-rc2'
