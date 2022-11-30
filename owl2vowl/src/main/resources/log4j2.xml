@@ -27,7 +27,7 @@
 		<logger name="org.springframework.boot.actuate.endpoint.jmx" level="warn"/>
 		<logger name="org.thymeleaf" level="warn"/>
 		<logger name="de.uni_stuttgart.vis.vowl.owl2vowl">
-			<AppenderRef ref="Ontology_Structure" level="info"/>
+			<AppenderRef ref="Console" level="info"/>
 		</logger>
 		<logger name="conversion-logger">
 			<AppenderRef ref="Console" level="info"/>
