@@ -11,9 +11,7 @@ COPY ./owl2vowl /app
 COPY --from=builde_fe ./deploy ../webVowl/deploy
 RUN ./gradlew clean build 
 
-FROM tomcat:9.0.48-jdk11-openjdk-slim
-RUN chown 1001 -R /usr/local/tomcat
+FROM openjdk:11-jdk-slim
 USER 1001
-RUN rm -rf /usr/local/tomcat/webapps/*
-COPY --from=builder_be /app/build/libs/owl2vowl*.war /usr/local/tomcat/webapps/ROOT.war
-CMD ["catalina.sh", "run"]
+COPY --from=builder_be /app/build/libs/owl2vowl.war /owl2vowl.war
+CMD ["java", "-jar", "/owl2vowl.war"]

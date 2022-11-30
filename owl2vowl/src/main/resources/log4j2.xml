@@ -12,32 +12,6 @@
 		<Console name="Console" target="SYSTEM_OUT" follow="true">
 			<PatternLayout pattern="${sys:CONSOLE_LOG_PATTERN}" />
 		</Console>
-		<RollingFile name="File" fileName="${log-dir}/log.log" filePattern="logs/$${date:yyyy-MM}/app-%d{yyyy-MM-dd-HH}-%i.log.gz">
-			<PatternLayout>
-				<Pattern>${sys:FILE_LOG_PATTERN}</Pattern>
-			</PatternLayout>
-			<Policies>
-				<SizeBasedTriggeringPolicy size="10 MB" />
-			</Policies>
-		</RollingFile>
-
-		<RollingFile name="Conversion_File" fileName="${log-dir}/conversions.log" filePattern="logs/$${date:yyyy-MM}/conversion-%d{yyyy-MM-dd-HH}-%i.log.gz">
-			<PatternLayout>
-				<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} - %msg%n</Pattern>
-			</PatternLayout>
-			<Policies>
-				<TimeBasedTriggeringPolicy>1</TimeBasedTriggeringPolicy>
-			</Policies>
-		</RollingFile>
-
-		<RollingFile name="Ontology_Structure" fileName="${log-dir}/structure.log" filePattern="logs/$${date:yyyy-MM}/structure-%d{yyyy-MM-dd-HH}-%i.log.gz">
-			<PatternLayout>
-				<Pattern>${sys:FILE_LOG_PATTERN}</Pattern>
-			</PatternLayout>
-			<Policies>
-				<TimeBasedTriggeringPolicy>1</TimeBasedTriggeringPolicy>
-			</Policies>
-		</RollingFile>
 	</Appenders>
 	<Loggers>
 		<Logger name="org.apache.catalina.startup.DigesterFactory" level="error" />
@@ -56,11 +30,10 @@
 			<AppenderRef ref="Ontology_Structure" level="info"/>
 		</logger>
 		<logger name="conversion-logger">
-			<AppenderRef ref="Conversion_File" level="info"/>
+			<AppenderRef ref="Console" level="info"/>
 		</logger>
 		<Root level="info">
 			<AppenderRef ref="Console" />
-			<AppenderRef ref="File" />
 		</Root>
 	</Loggers>
 </Configuration>

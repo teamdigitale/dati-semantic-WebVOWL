@@ -93,6 +93,7 @@ bootWar {
     from('../webVowl/deploy') {
         into('WEB-INF/classes/static')
     }
+    archiveName("owl2vowl.war")
 }
 
 dependencyCheck {
