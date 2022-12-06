@@ -1,13 +1,12 @@
 require("../css/vowl.css");
-
+const pkg = require("../../../package.json");
 var nodeMap = require("./elements/nodes/nodeMap")();
 var propertyMap = require("./elements/properties/propertyMap")();
-
 
 var webvowl = {};
 webvowl.graph = require("./graph");
 webvowl.options = require("./options");
-webvowl.version = "@@WEBVOWL_VERSION";
+webvowl.version = pkg.version;
 
 webvowl.util = {};
 webvowl.util.constants = require("./util/constants");
@@ -30,21 +29,19 @@ webvowl.modules.setOperatorFilter = require("./modules/setOperatorFilter");
 webvowl.modules.statistics = require("./modules/statistics");
 webvowl.modules.subclassFilter = require("./modules/subclassFilter");
 
-
 webvowl.nodes = {};
-nodeMap.entries().forEach(function ( entry ){
+nodeMap.entries().forEach(function (entry) {
   mapEntryToIdentifier(webvowl.nodes, entry);
 });
 
 webvowl.properties = {};
-propertyMap.entries().forEach(function ( entry ){
+propertyMap.entries().forEach(function (entry) {
   mapEntryToIdentifier(webvowl.properties, entry);
 });
 
-function mapEntryToIdentifier( map, entry ){
+function mapEntryToIdentifier(map, entry) {
   var identifier = entry.key.replace(":", "").toLowerCase();
   map[identifier] = entry.value;
 }
-
 
 module.exports = webvowl;
