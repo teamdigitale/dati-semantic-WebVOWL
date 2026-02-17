@@ -27,13 +27,12 @@ public class GenericClassAxiomVisitor implements OWLObjectVisitor {
 	@Override
 	public void visit(OWLSubClassOfAxiom axiom) {
 		if (!axiom.isGCI()) {
-		    // TODO
 			logger.info("Generic axiom subclass is not anonym -> currently not supported: " + axiom);
 			return;
 		}
 
 		if (axiom.getSuperClass().isAnonymous()) {
-			// TODO retrieve concrete superclass to use it in the subclass
+			// Retrieve concrete superclass to use it in the subclass — not yet implemented
 			return;
 		}
 

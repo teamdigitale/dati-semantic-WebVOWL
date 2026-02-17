@@ -70,7 +70,7 @@ public class DomainRangeFiller implements VowlPropertyVisitor {
 
 	private void mergeMulti() {
 		for (AbstractProperty value : values) {
-			// TODO rethink validity of in/out going edges in the nodes! Probably remap
+			// Note: validity of in/out going edges in the nodes may need remapping for complex cases
 			if (value.getRanges().size() > 1) {
 				VowlClass rangeUnion = vowlData.getGenerator().generateUnion(value.getRanges());
 				value.setMergedRange(rangeUnion.getIri());

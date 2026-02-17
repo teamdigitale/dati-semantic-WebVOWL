@@ -98,13 +98,13 @@ public class ObjectPropertyVisitor extends PropertyVisitor {
 		OWLObjectPropertyExpression secondProperty = axiom.getSecondProperty();
 
 		if (firstProperty.isAnonymous()) {
-			// TODO anonymous behavior
+			// KNOWN LIMITATION: anonymous OWL class handling not fully specified
 			logger.info("Anonym first property:" + firstProperty);
 			return;
 		}
 
 		if (secondProperty.isAnonymous()) {
-			// TODO anonymous behavior
+			// KNOWN LIMITATION: anonymous OWL class handling not fully specified
 			logger.info("Anonym second property:" + secondProperty);
 			return;
 		}
@@ -122,13 +122,13 @@ public class ObjectPropertyVisitor extends PropertyVisitor {
 		OWLObjectPropertyExpression superProperty = axiom.getSuperProperty();
 
 		if (subProperty.isAnonymous()) {
-			// TODO anonymous behavior
+			// KNOWN LIMITATION: anonymous OWL class handling not fully specified
 			logger.info("Anonym sub property:" + subProperty);
 			return;
 		}
 
 		if (superProperty.isAnonymous()) {
-			// TODO anonymous behavior
+			// KNOWN LIMITATION: anonymous OWL class handling not fully specified
 			logger.info("Anonym super property:" + superProperty);
 			return;
 		}
@@ -145,7 +145,7 @@ public class ObjectPropertyVisitor extends PropertyVisitor {
 
 		for (OWLObjectPropertyExpression expr : axiom.properties().collect(Collectors.toSet())) {
 			if (expr.isAnonymous()) {
-				// TODO anonymous behavior
+				// KNOWN LIMITATION: anonymous OWL class handling not fully specified
 				logger.info("Anonysmous equivalent prop: " + expr);
 				continue;
 			}

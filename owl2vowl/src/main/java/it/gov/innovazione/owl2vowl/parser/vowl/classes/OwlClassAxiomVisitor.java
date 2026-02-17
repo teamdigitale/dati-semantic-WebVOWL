@@ -71,7 +71,7 @@ public class OwlClassAxiomVisitor implements OWLObjectVisitor {
 	public void visit(OWLSubClassOfAxiom axiom) {
 		// tested for memory release[x]
 		if (axiom.isGCI()) {
-			// TODO anonymous subclass behavior
+			// KNOWN LIMITATION: anonymous OWL class handling not fully specified
 			logger.info("Anonym subclass: " + axiom);
 			return;
 		}
@@ -134,7 +134,7 @@ public class OwlClassAxiomVisitor implements OWLObjectVisitor {
 	@Override
 	public void visit(OWLObjectMinCardinality ce) {
 		if (!ce.getFiller().isOWLThing() && !ce.getFiller().isOWLNothing()) {
-			// TODO specification of a filler class
+			// Filler class specification not supported for cardinalities
 			logger.info("Specification of cardinalities not supported yet: " + ce);
 			return;
 		}
@@ -202,7 +202,7 @@ public class OwlClassAxiomVisitor implements OWLObjectVisitor {
 
 	private void processDataValueRestriction(OWLQuantifiedDataRestriction ce, PropertyAllSomeValue value) {
 		if (!ce.getFiller().isOWLDatatype()) {
-			// TODO no datatype
+			// DataValue range is not a datatype — not supported
 			logger.info("DataValue range is not a datatype: " + ce);
 			return;
 		}
@@ -235,7 +235,7 @@ public class OwlClassAxiomVisitor implements OWLObjectVisitor {
 
 	private void processObjectValueRestriction(OWLQuantifiedObjectRestriction ce, PropertyAllSomeValue value) {
 		if (ce.getFiller().isAnonymous()) {
-			// TODO anonymous
+			// KNOWN LIMITATION: anonymous OWL class handling not fully specified
 			logger.info("ObjectAllValuesFrom range class is anonymous: " + ce);
 			return;
 		}
@@ -254,7 +254,7 @@ public class OwlClassAxiomVisitor implements OWLObjectVisitor {
 	@Override
 	public void visit(OWLObjectMaxCardinality ce) {
 		if (!ce.getFiller().isOWLThing() && !ce.getFiller().isOWLNothing()) {
-			// TODO specification of a filler class
+			// Filler class specification not supported for cardinalities
 			logger.info("Specification of cardinalities not supported yet: " + ce);
 			return;
 		}
@@ -268,7 +268,7 @@ public class OwlClassAxiomVisitor implements OWLObjectVisitor {
 	@Override
 	public void visit(OWLObjectExactCardinality ce) {
 		if (!ce.getFiller().isOWLThing() && !ce.getFiller().isOWLNothing()) {
-			// TODO specification of a filler class
+			// Filler class specification not supported for cardinalities
 			logger.info("Specification of cardinalities not supported yet: " + ce);
 			return;
 		}
@@ -288,7 +288,7 @@ public class OwlClassAxiomVisitor implements OWLObjectVisitor {
 				node.addElementToUnion(operand.asOWLClass().getIRI());
 				node.addAttribute(VowlAttribute.UNION);
 			} else {
-				// TODO Anonymous undefined behavior
+				// KNOWN LIMITATION: anonymous OWL class handling not fully specified
 				logger.info("Anonymous exists in unions.");
 			}
 		}
@@ -304,7 +304,7 @@ public class OwlClassAxiomVisitor implements OWLObjectVisitor {
 
 		IRI baseClassIri = ce.getOperand().asOWLClass().getIRI();
 		IRI complementIri = owlClass.getIRI();
-		// TODO where to set the complement?
+		// Complement direction: set on the complemented class, not the base class
 		//vowlData.getClassForIri(baseClassIri).addComplement(complementIri);
 		vowlData.getClassForIri(complementIri).addComplement(baseClassIri);
 		vowlData.getClassForIri(complementIri).addAttribute(VowlAttribute.COMPLEMENT);
@@ -320,7 +320,7 @@ public class OwlClassAxiomVisitor implements OWLObjectVisitor {
 				node.addElementToIntersection(operand.asOWLClass().getIRI());
 				node.addAttribute(VowlAttribute.INTERSECTION);
 			} else {
-				// TODO Anonymous undefined behavior
+				// KNOWN LIMITATION: anonymous OWL class handling not fully specified
 				logger.info("Anonymous exists in intersections. " + operand);
 			}
 		}
