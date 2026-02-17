@@ -64,7 +64,7 @@ public class EntityCreationVisitor implements OWLObjectVisitor {
 		if (!property.isAnonymous()) {
 			prop = new VowlObjectProperty(property.getIRI());
 		} else {
-pri			// KNOWN LIMITATION: anonymous OWL class handling not fully specified
+			// KNOWN LIMITATION: anonymous OWL class handling not fully specified
 			logger.info("Anonymous OWLObjectProperty " + property);
 			return;
 		}
