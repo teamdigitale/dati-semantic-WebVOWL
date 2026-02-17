@@ -86,7 +86,7 @@ public class DataPropertyVisitor extends PropertyVisitor {
 //		}
 //
 //		if (superProperty.isAnonymous()) {
-//			// TODO anonymous behavior
+//			// KNOWN LIMITATION: anonymous OWL class handling not fully specified
 //			logger.info("Anonym super property:" + superProperty);
 //			return;
 //		}
@@ -103,7 +103,7 @@ public class DataPropertyVisitor extends PropertyVisitor {
 
 		for (OWLDataPropertyExpression expr : axiom.properties().collect(Collectors.toSet())) {
 			if (expr.isAnonymous()) {
-				// TODO anonymous behavior
+				// KNOWN LIMITATION: anonymous OWL class handling not fully specified
 				logger.info("Anonysmous equivalent prop: " + expr);
 				continue;
 			}

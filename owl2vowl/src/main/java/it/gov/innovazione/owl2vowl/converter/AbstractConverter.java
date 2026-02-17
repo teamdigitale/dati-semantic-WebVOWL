@@ -397,9 +397,7 @@ public abstract class AbstractConverter implements Converter {
 		}
 		vowlData = new VowlData();
 		vowlData.setOwlManager(manager);
-		// TODO Probably the parsing could be automated via class annotation and
-		// annotation parsing.
-		// e.q. @PreParsing, @Parsing, @PostParsing just as an idea for improvement
+		// Idea: the parsing could be automated via class annotation (@PreParsing, @Parsing, @PostParsing)
 
 		this.addLoadingInfo("* Generating ontology graph ");
 		this.setCurrentlyLoadingFlag("* Generating ontology graph ", true);

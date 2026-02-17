@@ -14,4 +14,7 @@
     <Match>
         <Bug pattern="DM_GC"/><!-- False positive when using lombok -->
     </Match>
+    <Match>
+        <Bug pattern="PA_PUBLIC_PRIMITIVE_ATTRIBUTE"/><!-- Public field used as shared state in controller — upstream design pattern -->
+    </Match>
 </FindBugsFilter>

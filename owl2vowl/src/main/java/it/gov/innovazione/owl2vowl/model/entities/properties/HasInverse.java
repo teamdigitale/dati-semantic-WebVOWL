@@ -8,6 +8,6 @@ import org.semanticweb.owlapi.model.IRI;
 public interface HasInverse {
 	void addInverse(IRI iri);
 
-	// TODO could be multiple inverses?
+	// Note: OWL allows multiple inverses but only one is tracked here
 	IRI getInverse();
 }

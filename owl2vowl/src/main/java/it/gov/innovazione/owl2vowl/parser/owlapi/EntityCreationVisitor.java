@@ -35,7 +35,7 @@ public class EntityCreationVisitor implements OWLObjectVisitor {
 		} else if (!ce.isAnonymous()) {
 			clazz = new VowlClass(ce.getIRI());
 		} else {
-			// TODO Anonymous behaviour undefined
+			// KNOWN LIMITATION: anonymous OWL class handling not fully specified
 			logger.info("Anonymous OWLClass " + ce);
 			return;
 		}
@@ -64,7 +64,7 @@ public class EntityCreationVisitor implements OWLObjectVisitor {
 		if (!property.isAnonymous()) {
 			prop = new VowlObjectProperty(property.getIRI());
 		} else {
-			// TODO anonymous behaviour
+			// KNOWN LIMITATION: anonymous OWL class handling not fully specified
 			logger.info("Anonymous OWLObjectProperty " + property);
 			return;
 		}
@@ -79,7 +79,7 @@ public class EntityCreationVisitor implements OWLObjectVisitor {
 		if (!property.isAnonymous()) {
 			prop = new VowlDatatypeProperty(property.getIRI());
 		} else {
-			// TODO anonymous behaviour
+			// KNOWN LIMITATION: anonymous OWL class handling not fully specified
 			logger.info("Anonymous OWLDataProperty " + property);
 			return;
 		}

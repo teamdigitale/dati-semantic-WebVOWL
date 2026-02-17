@@ -10,7 +10,7 @@ import it.gov.innovazione.owl2vowl.model.data.VowlData;
 import it.gov.innovazione.owl2vowl.parser.helper.ComparisonHelper;
 import org.semanticweb.owlapi.model.*;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  *
@@ -83,7 +83,7 @@ public class ImportedChecker implements OWLNamedObjectVisitor {
 
 	@Override
 	public void visit(@Nonnull OWLNamedIndividual owlNamedIndividual) {
-		// TODO Do we need to mark individuals as imported?
+		// Open question: marking individuals as imported is not implemented
 		//addImportedAttribute(owlNamedIndividual.getIRI());
 	}
 
