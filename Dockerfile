@@ -13,4 +13,4 @@ RUN ./gradlew --no-daemon clean build
 FROM eclipse-temurin:21-jre-jammy
 USER 1001
 COPY --from=builder_be /app/build/libs/owl2vowl.war /owl2vowl.war
-CMD ["java", "-jar", "/owl2vowl.war"]
+CMD ["java", "--add-opens", "java.base/java.lang=ALL-UNNAMED", "-jar", "/owl2vowl.war"]
