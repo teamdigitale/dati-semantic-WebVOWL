@@ -1,30 +1,30 @@
 # WebVOWL + OWL2VOWL
 
-WebVOWL è un visualizzatore web interattivo per ontologie OWL, basato sulla notazione Visual Notation for OWL Ontologies (VOWL). Il componente OWL2VOWL converte le ontologie OWL in formato JSON per la visualizzazione.
+WebVOWL is an interactive web visualizer for OWL ontologies based on the Visual Notation for OWL Ontologies (VOWL). The OWL2VOWL component converts OWL ontologies into the JSON format consumed by the WebVOWL visualization.
 
-Questo fork ([teamdigitale/dati-semantic-WebVOWL](https://github.com/teamdigitale/dati-semantic-WebVOWL)) modernizza il progetto originale [VisualDataWeb/WebVOWL](https://github.com/VisualDataWeb/WebVOWL) portandolo a:
+This fork ([teamdigitale/dati-semantic-WebVOWL](https://github.com/teamdigitale/dati-semantic-WebVOWL)) modernizes the upstream project [VisualDataWeb/WebVOWL](https://github.com/VisualDataWeb/WebVOWL) by porting it to:
 
-- **Java 21** (Eclipse Temurin) per il backend OWL2VOWL
-- **Node.js 20** per il build del frontend
-- **Spring Boot 3.x** con Tomcat embedded
-- **Gradle** (backend) + **Webpack** (frontend) come build system
-- Artifact WAR eseguibile con `java -jar` (niente Tomcat esterno)
+- **Java 21** (Eclipse Temurin) for the OWL2VOWL backend
+- **Node.js 20** for the frontend build
+- **Spring Boot 3.x** with embedded Tomcat
+- **Gradle** (backend) + **Webpack** (frontend) as build systems
+- An executable WAR runnable with `java -jar` (no external Tomcat required)
 
-> **Nota per chi usa la versione originale con Tomcat:** le versioni precedenti di WebVOWL richiedevano il deploy di un file WAR pre-compilato su Apache Tomcat 9. Questo fork utilizza Spring Boot con Tomcat embedded: è sufficiente eseguire `java -jar owl2vowl.war`. Il deploy su un application server esterno **non è supportato né consigliato**.
-
----
-
-## Prerequisiti
-
-- Server Ubuntu 22.04+ (per installazione nativa) oppure Docker
+> **Note for users of the upstream version with Tomcat:** previous WebVOWL releases required deploying a pre-built WAR onto Apache Tomcat 9. This fork uses Spring Boot with embedded Tomcat: running `java -jar owl2vowl.war` is enough. Deployment to an external application server is **not supported nor recommended**.
 
 ---
 
-## Opzione 1: Docker (consigliata)
+## Prerequisites
 
-Le immagini ufficiali sono pubblicate su GitHub Container Registry. Questa è la modalità di installazione consigliata.
+- Ubuntu 22.04+ (for native installation) or Docker
 
-### 1.1 Installare Docker
+---
+
+## Option 1: Docker (recommended)
+
+Official images are published on GitHub Container Registry. This is the recommended installation mode.
+
+### 1.1 Install Docker
 
 ```bash
 sudo apt update
@@ -33,9 +33,9 @@ sudo systemctl enable docker
 sudo systemctl start docker
 ```
 
-### 1.2 Avviare il container
+### 1.2 Start the container
 
-WebVOWL non richiede variabili d'ambiente per il funzionamento base:
+WebVOWL does not require environment variables for basic operation:
 
 ```bash
 docker run -d \
@@ -45,27 +45,27 @@ docker run -d \
   ghcr.io/teamdigitale/dati-semantic-webvowl:latest
 ```
 
-Verificare:
+Verify:
 
 ```bash
 docker logs webvowl
-# L'applicazione è disponibile su http://localhost:8080
+# The application is available on http://localhost:8080
 ```
 
 ---
 
-## Opzione 2: Installazione nativa con systemd
+## Option 2: Native installation with systemd
 
-Questa modalità prevede il build dai sorgenti e l'avvio come servizio di sistema. WebVOWL richiede sia Java che Node.js per il build.
+This mode builds from source and runs the service as a system service. WebVOWL requires both Java and Node.js for the build.
 
-### 2.1 Installare Java 21
+### 2.1 Install Java 21
 
 ```bash
 sudo apt update
 sudo apt install -y eclipse-temurin-21-jdk
 ```
 
-Se il pacchetto non è disponibile, aggiungere il repository Adoptium:
+If the package is not available, add the Adoptium repository:
 
 ```bash
 sudo apt install -y wget apt-transport-https gpg
@@ -75,14 +75,14 @@ sudo apt update
 sudo apt install -y temurin-21-jdk
 ```
 
-### 2.2 Installare Node.js 20
+### 2.2 Install Node.js 20
 
 ```bash
 curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 sudo apt install -y nodejs
 ```
 
-Verificare:
+Verify:
 
 ```bash
 java -version
@@ -91,9 +91,9 @@ node --version
 # v20.x.x
 ```
 
-### 2.3 Scaricare i sorgenti e buildare
+### 2.3 Fetch the sources and build
 
-Il build è in due fasi: prima il frontend (Node.js), poi il backend (Gradle) che include il frontend compilato.
+The build runs in two stages: the frontend (Node.js) first, then the backend (Gradle), which embeds the compiled frontend.
 
 ```bash
 sudo useradd -r -s /usr/sbin/nologin webvowl
@@ -102,32 +102,32 @@ cd /opt
 sudo git clone https://github.com/teamdigitale/dati-semantic-WebVOWL.git
 cd dati-semantic-WebVOWL
 
-# 1. Build del frontend
+# 1. Build the frontend
 cd webVowl
 npm install
 npm run build
 cd ..
 
-# 2. Build del backend (il Gradle task copia automaticamente il frontend dalla directory webVowl/deploy/)
+# 2. Build the backend (the Gradle task automatically copies the frontend from webVowl/deploy/)
 cd owl2vowl
 ./gradlew clean build -x test
 cd ..
 
-# Copiare l'artifact nella directory di installazione
+# Copy the artifact to the installation directory
 sudo mkdir -p /opt/webvowl
 sudo cp owl2vowl/build/libs/owl2vowl.war /opt/webvowl/owl2vowl.war
 sudo chown -R webvowl:webvowl /opt/webvowl
 ```
 
-**(Opzionale)** Rimuovere i sorgenti dopo il build per liberare spazio:
+**(Optional)** Remove the sources after the build to save space:
 
 ```bash
 sudo rm -rf /opt/dati-semantic-WebVOWL
 ```
 
-### 2.4 Creare il file di servizio systemd
+### 2.4 Create the systemd unit file
 
-Creare il file `/etc/systemd/system/webvowl.service`:
+Create `/etc/systemd/system/webvowl.service`:
 
 ```ini
 [Unit]
@@ -151,53 +151,53 @@ RestartSec=10
 WantedBy=multi-user.target
 ```
 
-> **Importante:** il flag `--add-opens java.base/java.lang=ALL-UNNAMED` è necessario per il corretto funzionamento della libreria OWL API con Java 21. Senza questo flag l'applicazione non si avvia.
+> **Important:** the `--add-opens java.base/java.lang=ALL-UNNAMED` flag is required for the OWL API library to work correctly on Java 21. Without this flag the application fails to start.
 
-### 2.5 Avviare il servizio
+### 2.5 Start the service
 
 ```bash
 sudo systemctl daemon-reload
 sudo systemctl enable webvowl
 sudo systemctl start webvowl
 
-# Verificare lo stato
+# Check status
 sudo systemctl status webvowl
 
-# Il servizio è disponibile su http://localhost:8080
+# The service is available on http://localhost:8080
 ```
 
 ---
 
-## Variabili d'ambiente
+## Environment variables
 
-WebVOWL attualmente non espone variabili d'ambiente di configurazione. Il servizio funziona out-of-the-box sulla porta 8080.
+WebVOWL does not currently expose configuration environment variables. The service works out of the box on port 8080.
 
 ---
 
-## Flag JVM richiesti
+## Required JVM flags
 
-| Flag | Motivo |
+| Flag | Reason |
 |---|---|
-| `--add-opens java.base/java.lang=ALL-UNNAMED` | Necessario per la reflection usata dalla libreria OWL API su Java 21 |
+| `--add-opens java.base/java.lang=ALL-UNNAMED` | Required for reflection used by the OWL API library on Java 21 |
 
-> **Nota:** nell'immagine Docker questo flag è già incluso nel `CMD` del Dockerfile.
+> **Note:** in the Docker image this flag is already included in the Dockerfile `CMD`.
 
 ---
 
-## Nota per chi usa Apache HTTPD come reverse proxy
+## Note for users of Apache HTTPD as a reverse proxy
 
-Se si dispone già di un reverse proxy Apache HTTPD configurato per la versione precedente (Tomcat esterno), tenere presente che il modello architetturale è cambiato:
+If you already have an Apache HTTPD reverse proxy configured for the previous version (external Tomcat), keep in mind that the architectural model has changed:
 
-- **Prima:** Apache parlava con un unico processo Tomcat su una singola porta, smistando le richieste per path (es. `/lodview`, `/lode`, `/webvowl`).
-- **Ora:** ogni visualizzatore è un processo Spring Boot autonomo in ascolto sulla propria porta locale.
+- **Before:** Apache talked to a single Tomcat process on a single port, routing requests by path (e.g. `/lodview`, `/lode`, `/webvowl`).
+- **Now:** each visualizer is an autonomous Spring Boot process listening on its own local port.
 
-Tutte le applicazioni partono di default sulla porta **8080**. Se si eseguono più visualizzatori sulla stessa macchina, è necessario assegnare porte diverse tramite la variabile d'ambiente `SERVER_PORT` (vedi la [sezione porte](#porte) e il [README di LodView](https://github.com/teamdigitale/dati-semantic-lodview) per la tabella completa).
+All applications start on port **8080** by default. If you run multiple visualizers on the same machine you need to assign different ports via the `SERVER_PORT` environment variable (see the [ports section](#ports) and the [LodView README](https://github.com/teamdigitale/dati-semantic-lodview) for the full table).
 
-Apache può continuare a fare reverse proxy, ma il backend non è più un unico Tomcat condiviso.
+Apache can keep acting as a reverse proxy, but the backend is no longer a single shared Tomcat.
 
-### Virtual host dedicati
+### Dedicated virtual hosts
 
-Se si usa un dominio (o sottodominio) dedicato per ogni visualizzatore, la configurazione è minimale:
+If you use a dedicated domain (or subdomain) for each visualizer, the configuration is minimal:
 
 ```apache
 <VirtualHost *:443>
@@ -209,34 +209,40 @@ Se si usa un dominio (o sottodominio) dedicato per ogni visualizzatore, la confi
     RequestHeader set X-Forwarded-Proto "https"
     RequestHeader set X-Forwarded-Port "443"
 
-    # ... configurazione SSL ...
+    # ... SSL configuration ...
 </VirtualHost>
 ```
 
-### Path-based proxy (più visualizzatori sullo stesso dominio)
+### Path-based proxy (multiple visualizers on the same domain)
 
-Se si vogliono esporre più visualizzatori sotto path diversi dello stesso dominio, è necessario configurare `SERVER_PORT` e `SERVER_SERVLET_CONTEXT_PATH`.
+If you want to expose multiple visualizers under different paths of the same domain, you need to configure `SERVER_PORT` and `SERVER_SERVLET_CONTEXT_PATH`.
 
-Esempio di file `.env` per WebVOWL in modalità path-based:
+Example `.env` file for WebVOWL in path-based mode:
 
 ```env
 SERVER_PORT=8082
 SERVER_SERVLET_CONTEXT_PATH=/webvowl
 ```
 
-Configurazione Apache:
+Apache configuration:
 
 ```apache
 ProxyPass /webvowl http://localhost:8082/webvowl
 ProxyPassReverse /webvowl http://localhost:8082/webvowl
 ```
 
-> **Nota:** senza `SERVER_SERVLET_CONTEXT_PATH`, le applicazioni Spring Boot servono su `/` (root) e il path-based proxy non funzionerebbe correttamente. Per la configurazione Apache completa con tutti i visualizzatori, vedere il [README di LodView](https://github.com/teamdigitale/dati-semantic-lodview).
+> **Note:** without `SERVER_SERVLET_CONTEXT_PATH`, Spring Boot applications serve on `/` (root) and the path-based proxy would not work correctly. For the full Apache configuration covering all visualizers, see the [LodView README](https://github.com/teamdigitale/dati-semantic-lodview).
 
 ---
 
-## Porte
+## Ports
 
-| Porta | Protocollo | Descrizione |
+| Port | Protocol | Description |
 |---|---|---|
-| 8080 | HTTP | Interfaccia web WebVOWL + API OWL2VOWL (default, configurabile con `SERVER_PORT`) |
+| 8080 | HTTP | WebVOWL web interface + OWL2VOWL API (default, configurable via `SERVER_PORT`) |
+
+---
+
+## License
+
+This project is released under the **MIT License** (see [`publiccode.yml`](./publiccode.yml)).
